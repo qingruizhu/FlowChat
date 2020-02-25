@@ -10,8 +10,7 @@ import java.awt.event.MouseListener;
 public class FriendList extends JFrame implements ActionListener, MouseListener {
 
     public static void main(String[] args) {
-        FriendList friendList = new FriendList();
-
+        //FriendList friendList = new FriendList();
     }
 
 
@@ -26,7 +25,11 @@ public class FriendList extends JFrame implements ActionListener, MouseListener 
     //把整个JFrame设置成CardLayout
     CardLayout cardLayout;
 
-    public FriendList () {
+    //自己的账号
+    private String selfId;
+
+    public FriendList (String selfId) {
+        this.selfId = selfId;
     //第一张卡片
         /**点开后显示好友列表*/
         /** 添加按钮 */
@@ -93,6 +96,7 @@ public class FriendList extends JFrame implements ActionListener, MouseListener 
 
         /** 把整个JFrame设置成CardLayout */
         cardLayout = new CardLayout();
+        this.setTitle(selfId);//title 显示自己的编号
         this.setLayout(cardLayout);
         this.add(friend_jp1,"1");
         this.add(stranger_jp1,"2");
@@ -121,9 +125,10 @@ public class FriendList extends JFrame implements ActionListener, MouseListener 
             if (event.getClickCount() == 2) {
                 //得到好友编号
                 String friendNo = jLabel.getText();
-                System.out.println("你准备和【"+friendNo+"】聊天...");
+                System.out.println("你["+selfId+"]准备和【"+friendNo+"】聊天...");
+                Chat chat = new Chat(selfId,friendNo);
+                new Thread(chat).start();//启动聊天线程
             }
-
         }
     }
 
