@@ -1,6 +1,7 @@
 package com.flow.client.model;
 
-import com.flow.common.User;
+
+import com.flow.bgd.model.User;
 
 public class ClientUser {
 

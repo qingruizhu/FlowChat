@@ -20,6 +20,12 @@
     <dependencies>
         <dependency>
             <groupId>com.flow</groupId>
+            <artifactId>bgd</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.flow</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

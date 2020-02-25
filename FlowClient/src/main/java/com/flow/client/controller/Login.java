@@ -1,7 +1,7 @@
 package com.flow.client.controller;
 
+import com.flow.bgd.model.User;
 import com.flow.client.model.ClientUser;
-import com.flow.common.User;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
