@@ -1,5 +1,7 @@
 package com.flow.client.controller;
 
+import com.flow.client.util.ManagerChat;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -62,8 +64,6 @@ public class FriendList extends JFrame implements ActionListener, MouseListener 
         friend_jp1.add(friendScoll,"Center");
         friend_jp1.add(friend_jp3,"South");
 
-
-
         //第二张卡片
         /**点开后显示陌生人列表*/
         /** 添加按钮 */
@@ -124,10 +124,10 @@ public class FriendList extends JFrame implements ActionListener, MouseListener 
             //双击事件
             if (event.getClickCount() == 2) {
                 //得到好友编号
-                String friendNo = jLabel.getText();
-                System.out.println("你["+selfId+"]准备和【"+friendNo+"】聊天...");
-                Chat chat = new Chat(selfId,friendNo);
-                new Thread(chat).start();//启动聊天线程
+                String friendId = jLabel.getText();
+                System.out.println("你["+selfId+"]准备和【"+friendId+"】聊天...");
+                Chat chat = new Chat(selfId,friendId);
+                ManagerChat.set(selfId+" "+friendId,chat);
             }
         }
     }

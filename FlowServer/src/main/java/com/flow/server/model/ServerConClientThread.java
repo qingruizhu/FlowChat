@@ -28,7 +28,6 @@ public class ServerConClientThread extends Thread{
                 ServerConClientThread getterThread = ManagerClientThread.getClientThread(message.getGetter());
                 ObjectOutputStream oos = new ObjectOutputStream(getterThread.socket.getOutputStream());
                 oos.writeObject(message);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

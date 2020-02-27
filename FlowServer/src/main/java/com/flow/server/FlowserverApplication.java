@@ -1,15 +1,11 @@
 package com.flow.server;
 
 import com.flow.server.controller.ServerFrame;
+import com.flow.server.util.SpringContextUtils;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 
-import javax.swing.*;
 import java.awt.*;
 
 @SpringBootApplication(scanBasePackages = "com.flow")

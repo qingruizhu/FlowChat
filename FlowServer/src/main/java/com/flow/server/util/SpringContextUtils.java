@@ -1,4 +1,4 @@
-package com.flow.server;
+package com.flow.server.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

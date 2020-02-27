@@ -1,7 +1,9 @@
 package com.flow.client.controller;
 
 import com.flow.client.model.ClientConServer;
+import com.flow.client.util.ManagerClientThread;
 import com.flow.common.Message;
+import com.flow.common.MessageType;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,11 +14,10 @@ import java.io.ObjectOutputStream;
 import java.util.Date;
 
 /**
- * 好友聊天界面：
- *      因为客户端处于读取状态，把他做成一个线程
+ * 好友聊天界面
  *
  */
-public class Chat extends JFrame implements ActionListener,Runnable{
+public class Chat extends JFrame implements ActionListener{
 
     public static void main(String[] args) {
         Chat qqChat=new Chat("1","zqr");
@@ -26,7 +27,6 @@ public class Chat extends JFrame implements ActionListener,Runnable{
     private JTextField sendContent;
     private JButton sendButton;
     private String selfId, friendId;
-
 
     public Chat(String selfId,String friendId){
         this.selfId = selfId;
@@ -46,6 +46,9 @@ public class Chat extends JFrame implements ActionListener,Runnable{
         this.setIconImage((new ImageIcon("image/qq.gif").getImage()));
         this.setSize(300, 200);
         this.setVisible(true);
+//        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+
     }
 
     @Override
@@ -56,33 +59,40 @@ public class Chat extends JFrame implements ActionListener,Runnable{
             message.setSender(selfId);
             message.setGetter(friendId);
             message.setCon(sendContent.getText());
+            message.setMesType(MessageType.message_comm_mes);
             message.setSendTime(new Date().toString());
             try {
-                ObjectOutputStream oos = new ObjectOutputStream(ClientConServer.socket.getOutputStream());
+                ObjectOutputStream oos = new ObjectOutputStream(ManagerClientThread.get(selfId).getSocket().getOutputStream());
                 oos.writeObject(message);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            textArea.append("                           "+sendContent.getText()+ "\r\n");
         }
 
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                //客户端从服务端读取信息,读不到就一直等待
-                ObjectInputStream ois = new ObjectInputStream(ClientConServer.socket.getInputStream());
-                Message message = (Message)ois.readObject();
-                //显示在聊天框中
-                String content = message.getSender() + " 对 " + message.getGetter() + " 说：" + message.getCon() + "\r\n";
-                textArea.append(content);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
-
-        }
+    public void showMessage(String content){
+        //显示在聊天框中
+        textArea.append(content);
     }
+
+//    @Override
+//    public void run() {
+//        while (true) {
+//            try {
+//                //客户端从服务端读取信息,读不到就一直等待
+//                ObjectInputStream ois = new ObjectInputStream(ClientConServer.socket.getInputStream());
+//                Message message = (Message)ois.readObject();
+//                //显示在聊天框中
+//                String content = message.getSender() + " 对 " + message.getGetter() + " 说：" + message.getCon() + "\r\n";
+//                textArea.append(content);
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//
+//            }
+//
+//        }
+//    }
 }

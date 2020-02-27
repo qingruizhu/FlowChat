@@ -1,7 +1,7 @@
 package com.flow.client.controller;
 
 import com.flow.bgd.model.User;
-import com.flow.client.model.ClientUser;
+import com.flow.client.model.ClientConServer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -62,8 +62,7 @@ public class Login extends JFrame implements ActionListener {
             User user = new User();
             user.setUserId(accoutFiled.getText().trim());
             user.setPassword(new String(pwdFiled.getPassword()));
-            ClientUser clientUser = new ClientUser();
-           if( clientUser.checkUser(user)){
+           if(ClientConServer.sendLoginInfoToServer(user)){
                //成功登录
                FriendList friends = new FriendList(user.getUserId());
                this.dispose();
