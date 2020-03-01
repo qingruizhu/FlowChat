@@ -25,7 +25,7 @@ public class ServerConClientThread extends Thread{
                 Message message = (Message)ois.readObject();
                 System.out.println(message.getSender()+" 给 "+message.getGetter()+" 说："+message.getCon());
                 /** 2.消息转发 */
-                ServerConClientThread getterThread = ManagerClientThread.getClientThread(message.getGetter());
+                ServerConClientThread getterThread = ManagerClientThread.get(message.getGetter());
                 ObjectOutputStream oos = new ObjectOutputStream(getterThread.socket.getOutputStream());
                 oos.writeObject(message);
             } catch (Exception e) {
@@ -33,5 +33,9 @@ public class ServerConClientThread extends Thread{
             }
 
         }
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 }

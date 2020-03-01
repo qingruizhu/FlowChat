@@ -2,14 +2,24 @@ package com.flow.client.controller;
 
 import com.flow.bgd.model.User;
 import com.flow.client.model.ClientConServer;
+import com.flow.client.util.ManagerClientThread;
+import com.flow.client.util.ManagerFriendList;
+import com.flow.common.Message;
+import com.flow.common.MessageType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  * 登录界面
  */
+@Component
 public class Login extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
@@ -55,16 +65,28 @@ public class Login extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    @Autowired
+    ClientConServer clientConServer;
     @Override
     public void actionPerformed(ActionEvent event) {
         //用户点击登录后
         if (event.getSource()==yes){
             User user = new User();
-            user.setUserId(accoutFiled.getText().trim());
+            String selfId = accoutFiled.getText().trim();
+            user.setUserId(selfId);
             user.setPassword(new String(pwdFiled.getPassword()));
-           if(ClientConServer.sendLoginInfoToServer(user)){
+           if(clientConServer.sendLoginInfoToServer(user)){
                //成功登录
-               FriendList friends = new FriendList(user.getUserId());
+               //发送:请求在线好友列表
+//               try {
+////                   ObjectOutputStream oos = new ObjectOutputStream(ManagerClientThread.get(selfId).getSocket().getOutputStream());
+////                   Message message = new Message();
+////                   message.setSender(selfId);
+////                   message.setMesType(MessageType.message_get_onLineFriend);
+////                   oos.writeObject(message);
+////               } catch (IOException e) {
+////                   e.printStackTrace();
+////               }
                this.dispose();
            }else{
                JOptionPane.showMessageDialog(this,"用户名或密码错误!");

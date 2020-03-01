@@ -1,18 +1,31 @@
 package com.flow.server.model;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ManagerClientThread {
 
-    public static HashMap manager = new HashMap<String,ServerConClientThread>();
+    private static Map<String,ServerConClientThread> manager = new HashMap<String,ServerConClientThread>();
 
     //添加客户端通讯线程
-    public static void addClientThread(String userId, ServerConClientThread clientThread) {
+    public static void set(String userId, ServerConClientThread clientThread) {
         manager.put(userId, clientThread);
     }
     //添加客户端通讯线程
-    public static ServerConClientThread getClientThread(String userId) {
-       return (ServerConClientThread)manager.get(userId);
+    public static ServerConClientThread get(String userId) {
+       return manager.get(userId);
     }
 
+    /**
+     * 返回当前在线的人的id
+     */
+    public String onlineUserIds(){
+        Iterator iterator = manager.keySet().iterator();
+        StringBuilder sb = new StringBuilder();
+        while (iterator.hasNext()) {
+            sb.append(iterator.next() + " ");
+        }
+        return sb.toString();
+    }
 }

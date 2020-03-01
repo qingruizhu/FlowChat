@@ -29,4 +29,18 @@ public class UserService implements IUserService{
         return null;
     }
 
+    @Override
+    public int update(User update) {
+        if (null != update.getId()) {
+            return mapper.updateByPrimaryKeySelective(update);
+        }
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        if (null != update.getUserId() && !"".equals(update.getUserId())) {
+            criteria.andUserIdEqualTo(update.getUserId());
+        }
+        return mapper.updateByExample(update, example);
+    }
+
+
 }

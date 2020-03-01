@@ -9,7 +9,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import java.awt.*;
 
 @SpringBootApplication(scanBasePackages = "com.flow")
-@MapperScan("com.flow.bgd.mapper")
+@MapperScan(basePackages="com.flow.bgd.mapper,com.flow.server.dao")
 public class FlowserverApplication {
 
         public static void main(String[] args) {

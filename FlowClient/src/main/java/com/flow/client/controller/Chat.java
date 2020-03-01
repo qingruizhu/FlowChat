@@ -14,6 +14,13 @@ import java.io.ObjectOutputStream;
 import java.util.Date;
 
 /**
+ * 设置窗口关闭按钮点击后的默认操作, 参考值:
+ *     WindowConstants.DO_NOTHING_ON_CLOSE: 不执行任何操作。
+ *     WindowConstants.HIDE_ON_CLOSE: 隐藏窗口（不会结束进程）, 再次调用 setVisible(true) 将再次显示。
+ *     WindowConstants.DISPOSE_ON_CLOSE: 销毁窗口, 如果所有可显示的窗口都被 DISPOSE, 则可能会自动结束进程。
+ *     WindowConstants.EXIT_ON_CLOSE: 退出进程。
+ */
+/**
  * 好友聊天界面
  *
  */
@@ -46,8 +53,8 @@ public class Chat extends JFrame implements ActionListener{
         this.setIconImage((new ImageIcon("image/qq.gif").getImage()));
         this.setSize(300, 200);
         this.setVisible(true);
-//        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 
     }
 
@@ -67,7 +74,8 @@ public class Chat extends JFrame implements ActionListener{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            textArea.append("                           "+sendContent.getText()+ "\r\n");
+            textArea.append(selfId + " 对 " +friendId + " 说：" + sendContent.getText() + "\r\n");
+            sendContent.setText("");
         }
 
     }

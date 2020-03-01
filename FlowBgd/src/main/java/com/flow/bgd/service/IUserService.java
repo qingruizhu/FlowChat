@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IUserService {
     public User select(User select);
+    public int update(User update);
 }

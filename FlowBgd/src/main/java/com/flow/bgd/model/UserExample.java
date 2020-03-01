@@ -373,6 +373,66 @@ public class UserExample {
             addCriterion("password not between", value1, value2, "password");
             return (Criteria) this;
         }
+
+        public Criteria andOnlineIsNull() {
+            addCriterion("online is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineIsNotNull() {
+            addCriterion("online is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineEqualTo(Integer value) {
+            addCriterion("online =", value, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineNotEqualTo(Integer value) {
+            addCriterion("online <>", value, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineGreaterThan(Integer value) {
+            addCriterion("online >", value, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineGreaterThanOrEqualTo(Integer value) {
+            addCriterion("online >=", value, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineLessThan(Integer value) {
+            addCriterion("online <", value, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineLessThanOrEqualTo(Integer value) {
+            addCriterion("online <=", value, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineIn(List<Integer> values) {
+            addCriterion("online in", values, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineNotIn(List<Integer> values) {
+            addCriterion("online not in", values, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineBetween(Integer value1, Integer value2) {
+            addCriterion("online between", value1, value2, "online");
+            return (Criteria) this;
+        }
+
+        public Criteria andOnlineNotBetween(Integer value1, Integer value2) {
+            addCriterion("online not between", value1, value2, "online");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
