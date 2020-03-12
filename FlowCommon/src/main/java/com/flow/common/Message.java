@@ -6,8 +6,58 @@ public class Message implements java.io.Serializable{
 
 	private String sender;
 	private String getter;
-	private String con;
+	private String con;//内容
 	private String sendTime;
+	private String font;
+	private int size;
+	private String col;//字体的颜色设置
+
+
+
+	private String fileType;//文件类型
+	private byte[] fileByte;//文件类容
+
+
+	public String getFont() {
+		return font;
+	}
+
+	public void setFont(String font) {
+		this.font = font;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public String getCol() {
+		return col;
+	}
+
+	public void setCol(String col) {
+		this.col = col;
+	}
+
+	public byte[] getFileByte() {
+		return fileByte;
+	}
+
+	public void setFileByte(byte[] b,int n) {
+		fileByte=new byte[n];
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
 	public String getSender() {
 		return sender;
 	}

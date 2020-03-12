@@ -9,11 +9,15 @@ public class ManagerChat {
 
     private static Map<String, Chat> chats = new HashMap<String, Chat>();
 
-    public static void set(String meAndFriendId,Chat chat){
+    public static void set(String meAndFriendId, Chat chat) {
         chats.put(meAndFriendId, chat);
     }
-    public static Chat get(String meAndFriendId){
-       return chats.get(meAndFriendId);
+
+    public static Chat get(String meAndFriendId) {
+        return chats.get(meAndFriendId);
     }
 
+    public static void remove(String meAndFriendId) {
+        chats.remove(meAndFriendId);
+    }
 }

@@ -12,9 +12,13 @@ public class ManagerClientThread {
     public static void set(String userId, ServerConClientThread clientThread) {
         manager.put(userId, clientThread);
     }
-    //添加客户端通讯线程
+    //获取客户端通讯线程
     public static ServerConClientThread get(String userId) {
        return manager.get(userId);
+    }
+    //移除客户端通讯线程
+    public static ServerConClientThread remove(String userId) {
+       return manager.remove(userId);
     }
 
     /**

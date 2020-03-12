@@ -136,7 +136,7 @@ public class FriendList extends JFrame implements ActionListener, MouseListener 
                 //得到好友编号
                 String friendId = jLabel.getId();
                 System.out.println("你["+selfId+"]准备和【"+friendId+"】聊天...");
-                Chat chat = new Chat(selfId,friendId);
+                Chat chat = new Chat(selfId,friendId,jLabel.getUser().getName());
                 ManagerChat.set(selfId+" "+friendId,chat);
             }
         }

@@ -49,7 +49,7 @@ public class Server {
                 if (null!=select && select.getPassword().equals(user.getPassword())) {
 //                if ("123456".equals(user.getPassword())) {
                     /** 1.返回登录成功 */
-                    message.setMesType("1");
+                    message.setMesType(MessageType.message_succeed);
                     oos.writeObject(message);
                     /** 2.修改登录状态*/
                     User update = new User();
@@ -75,7 +75,7 @@ public class Server {
                     }
                 } else {
                     //失败->关闭连接
-                    message.setMesType("2");
+                    message.setMesType(MessageType.message_login_fail);
                     oos.writeObject(message);
                     accept.close();
                 }

@@ -20,5 +20,7 @@ public class FriendJlabel extends JLabel {
         return this.user.getUserId();
     }
 
-
+    public User getUser() {
+        return user;
+    }
 }

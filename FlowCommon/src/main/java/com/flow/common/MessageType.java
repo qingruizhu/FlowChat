@@ -1,13 +1,15 @@
 /**
- * ¶¨Òå°üµÄÖÖÀà
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 package com.flow.common;
 
 public interface MessageType {
 
-	String message_succeed="1";//±íÃ÷ÊÇµÇÂ½³É¹¦
-	String message_login_fail="2";//±íÃ÷µÇÂ¼Ê§°Ü
-	String message_comm_mes="3";//ÆÕÍ¨ĞÅÏ¢°ü
-	String message_get_onLineFriend="4";//ÒªÇóÔÚÏßºÃÓÑµÄ°ü
-	String message_ret_onLineFriend="5";//·µ»ØÔÚÏßºÃÓÑµÄ°ü
+	String message_succeed="1";//ç™»å½•æˆåŠŸ
+	String message_login_fail="2";//ç™»å½•å¤±è´¥
+	String message_comm_mes="3";//æ™®é€šæ¶ˆæ¯
+	String message_get_onLineFriend="4";//è·å–å¥½å‹åˆ—è¡¨
+	String message_ret_onLineFriend="5";//è¿”å›å¥½å‹åˆ—è¡¨
+	String message_login_out = "6";
+	String message_sendfile = "7";//å‘é€æ–‡ä»¶
 }
