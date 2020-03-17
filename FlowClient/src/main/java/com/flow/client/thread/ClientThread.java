@@ -43,18 +43,27 @@ public class ClientThread extends Thread {
                     /** 接收文件 */
                     if (receiveFrame == null) {
                         receiveFrame = new ReceiveFrame();
-                        receiveFrame.setMs(message);
-                        receiveFrame.setVisible(true);
-                    } else {
-                        receiveFrame.setMs(message);
-                        receiveFrame.saveFile();
-                        receiveFrame.setVisible(false);
-                        receiveFrame = null;
                     }
+                    receiveFrame.setMessage(message);
+                    receiveFrame.setVisible(true);
+//                    else {
+//                        receiveFrame.setMs(message);
+//                        receiveFrame.saveFile();
+//                        receiveFrame.setVisible(false);
+//                        receiveFrame = null;
+//                    }
+                }else if (message.getMesType().equals(MessageType.message_login_out)) {
+                    /** 成功退出 */
+                    //终止线程
+                    this.interrupt();
+                    if (this.isInterrupted()) {
+                        System.exit(0);
+                    }
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-
+                break;
             }
 
         }

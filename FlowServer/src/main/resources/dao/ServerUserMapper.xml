@@ -11,7 +11,7 @@
 
 
     <select id="selectOnlineFriendsByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select * from USER
+        select * from user
         where
         user_id in (select friend_id from user_friend where user_id =#{userId,jdbcType=VARCHAR})
         and online=1

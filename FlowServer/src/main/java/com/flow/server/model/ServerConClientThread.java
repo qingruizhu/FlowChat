@@ -1,9 +1,10 @@
 package com.flow.server.model;
 
+import com.flow.bgd.model.User;
+import com.flow.bgd.service.UserService;
 import com.flow.common.Message;
 import com.flow.common.MessageType;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -13,6 +14,7 @@ import java.net.Socket;
  */
 public class ServerConClientThread extends Thread{
     private Socket socket;
+    private UserService userService;
 
     public ServerConClientThread(Socket socket) {
         this.socket = socket; //把socket给该线程
@@ -31,9 +33,18 @@ public class ServerConClientThread extends Thread{
                     ObjectOutputStream oos = new ObjectOutputStream(getterThread.socket.getOutputStream());
                     oos.writeObject(message);
                 } else if (message.getMesType().equals(MessageType.message_login_out)) {
+                    /** 3.修改登录状态*/
+                    User update = new User();
+                    update.setUserId(message.getSender());
+                    update.setOnline(0);
+                    userService.update(update);
+                    //终止线程
+                    ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
+                    oos.writeObject(message);
                     this.interrupt();
                     ManagerClientThread.remove(message.getSender());
                 }else if (message.getMesType().equals(MessageType.message_sendfile)) {
+                    /** 发送文件 */
                     ServerConClientThread thread = ManagerClientThread
                             .get(message.getGetter());
                     ObjectOutputStream oos = new ObjectOutputStream(
@@ -42,6 +53,7 @@ public class ServerConClientThread extends Thread{
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                break;
             }
 
         }
@@ -49,5 +61,9 @@ public class ServerConClientThread extends Thread{
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

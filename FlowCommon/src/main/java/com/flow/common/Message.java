@@ -48,6 +48,7 @@ public class Message implements java.io.Serializable{
 
 	public void setFileByte(byte[] b,int n) {
 		fileByte=new byte[n];
+		fileByte = b;
 	}
 
 	public String getFileType() {

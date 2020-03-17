@@ -2,7 +2,6 @@ package com.flow.client.file;
 
 
 import com.flow.common.Message;
-import com.flow.common.MessageType;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -12,17 +11,18 @@ import java.io.*;
 
 public class ReceiveFrame extends JFrame implements ActionListener {
 
-    JButton save;
-    File file;
-    FileWriter filewrite;
-    BufferedWriter buffwrite;
-    InputStream in;
-    DataOutputStream dataout;
-    JFileChooser fileDialog;
-    Message ms = new Message();
-    int flag = 0;
-    DataOutputStream fos;
-    FileOutputStream fileoutputstream;
+    private JButton save;
+    private Message message;
+//    File file;
+    //    FileWriter filewrite;
+//    BufferedWriter buffwrite;
+//    InputStream in;
+//    DataOutputStream dataout;
+//    JFileChooser fileDialog;
+
+    //    int flag = 0;
+//    DataOutputStream fos;
+//    FileOutputStream fileoutputstream;
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -32,7 +32,7 @@ public class ReceiveFrame extends JFrame implements ActionListener {
     }
 
     public ReceiveFrame() {
-        save = new JButton("¡Ì¥ÊŒ™");
+        save = new JButton("Âè¶Â≠ò‰∏∫");
         save.addActionListener(this);
         this.add(save);
         this.setBounds(1100, 700, 100, 30);
@@ -50,60 +50,65 @@ public class ReceiveFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent arg0) {
         // TODO Auto-generated method stub
         if (arg0.getSource() == save) {
-            if (flag == 0) {
-                fileDialog = new JFileChooser();
-                FileNameExtensionFilter fnef = new FileNameExtensionFilter("TXT and INI Files (.txt, .ini)", "txt", "ini");
-                FileNameExtensionFilter txt = new FileNameExtensionFilter("TXT Files (.txt)", "txt");
-                FileNameExtensionFilter ini = new FileNameExtensionFilter("INI Files (.ini)", "ini");
-                fileDialog.addChoosableFileFilter(fnef);
-                fileDialog.addChoosableFileFilter(ini);
-                fileDialog.addChoosableFileFilter(txt);
-                //fileDialog.setDialogType(JFileChooser.SAVE_DIALOG);
-                fileDialog.showSaveDialog(this);
-                file = fileDialog.getSelectedFile();
-                fileDialog.getCurrentDirectory();
-                file.getParent();
-                file = new File(file.getParent() + file.getName() + "." + ms.getFileType());
+//            if (flag == 0) {
+            JFileChooser fileDialog = new JFileChooser();
+            FileNameExtensionFilter fnef = new FileNameExtensionFilter("TXT and INI Files (.txt, .ini)", "txt", "ini");
+            FileNameExtensionFilter txt = new FileNameExtensionFilter("TXT Files (.txt)", "txt");
+            FileNameExtensionFilter ini = new FileNameExtensionFilter("INI Files (.ini)", "ini");
+            FileNameExtensionFilter word = new FileNameExtensionFilter("INI Files (.word)", "word");
+            FileNameExtensionFilter pdf = new FileNameExtensionFilter("INI Files (.pdf)", "pdf");
+            fileDialog.addChoosableFileFilter(fnef);
+            fileDialog.addChoosableFileFilter(ini);
+            fileDialog.addChoosableFileFilter(txt);
+            fileDialog.addChoosableFileFilter(word);
+            fileDialog.addChoosableFileFilter(pdf);
+            //fileDialog.setDialogType(JFileChooser.SAVE_DIALOG);
+            fileDialog.showSaveDialog(this);
+            File file = fileDialog.getSelectedFile();
+            fileDialog.getCurrentDirectory();
+            file = new File(file.getParent() + "/" + file.getName() + "." + message.getFileType());
 
-                try {
-                    fos = new DataOutputStream(new FileOutputStream(file.getPath()));
-                    byte[] by = ms.getFileByte();
-                    fos.write(by);
-                    fos.close();
-                    //filewrite = new FileWriter(file);
-                    //buffwrite=new BufferedWriter(filewrite);
-                    //dataout=new DataOutputStream(new FileOutputStream(file.getPath()));
-                    //dataout.writeUTF(ms.getCol());
-                    //dataout.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
+            try {
+                DataOutputStream fos = new DataOutputStream(new FileOutputStream(file.getPath()));
+                byte[] by = message.getFileByte();
+//                    String s = new String(by,"utf8");
+//                    System.out.println(s);
+                fos.write(by);
+                fos.close();
+                //filewrite = new FileWriter(file);
+                //buffwrite=new BufferedWriter(filewrite);
+                //dataout=new DataOutputStream(new FileOutputStream(file.getPath()));
+                //dataout.writeUTF(ms.getCol());
+                //dataout.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-            saveFile();
+
+//            }
+//            saveFile();
             this.setVisible(false);
         }
 
     }
 
-    public void setMs(Message m) {
-        ms = m;
+    public void setMessage(Message message) {
+        this.message = message;
     }
 
-    public void saveFile() {
-        if (ms.getMesType().equals(MessageType.message_sendfile)) {
-            try {
-                fos.close();
-                // buffwrite.write(ms.getCon());
-                // buffwrite.close();
-                //filewrite.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
+//    public void saveFile() {
+//        if (ms.getMesType().equals(MessageType.message_sendfile)) {
+//            try {
+//                fos.close();
+//                // buffwrite.write(ms.getCon());
+//                // buffwrite.close();
+//                //filewrite.close();
+//            } catch (IOException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 
 }

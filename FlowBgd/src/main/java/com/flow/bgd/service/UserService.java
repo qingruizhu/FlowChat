@@ -39,7 +39,7 @@ public class UserService implements IUserService{
         if (null != update.getUserId() && !"".equals(update.getUserId())) {
             criteria.andUserIdEqualTo(update.getUserId());
         }
-        return mapper.updateByExample(update, example);
+        return mapper.updateByExampleSelective(update, example);
     }
 
 

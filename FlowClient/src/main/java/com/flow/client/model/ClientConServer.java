@@ -1,15 +1,12 @@
 package com.flow.client.model;
 
 import com.flow.bgd.model.User;
-import com.flow.bgd.model.UserFriend;
-import com.flow.bgd.service.UserFriendService;
 import com.flow.client.controller.FriendList;
 import com.flow.client.dao.ClientUserMapper;
 import com.flow.client.thread.ClientThread;
 import com.flow.client.util.ManagerClientThread;
 import com.flow.client.util.ManagerFriendList;
 import com.flow.common.Message;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,11 +22,12 @@ public class ClientConServer {
     private ClientUserMapper clientUserMapper;
 
     public  boolean sendLoginInfoToServer(User user){
-        List<User> aa = clientUserMapper.selectFriendsByUserId(user.getUserId());
-        System.out.println(aa.get(0));
+//        List<User> aa = clientUserMapper.selectFriendsByUserId(user.getUserId());
+//        System.out.println(aa.get(0));
 
         boolean b = false;
         try {
+
             Socket socket = new Socket("127.0.0.1", 9999);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             oos.writeObject(user);

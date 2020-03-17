@@ -40,6 +40,7 @@ public class ServerFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getSource()==start) {
             server.listening();//开启服务器监听
+            start.setEnabled(false);
         }else if (event.getSource()==stop) {
             this.dispose();
         }
