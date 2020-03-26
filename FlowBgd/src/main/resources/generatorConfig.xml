@@ -30,12 +30,12 @@
             <property name="nullCatalogMeansCurrent" value="true" />
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.flow.bgd.model" targetProject="FlowBgd\src\main\java"/>
+        <javaModelGenerator targetPackage="com.flow.bgd.model" targetProject="FlowBgd/src/main/java"/>
 
-        <sqlMapGenerator targetPackage="com.flow.bgd.mapper" targetProject="FlowBgd\src\main\resources"/>
+        <sqlMapGenerator targetPackage="com.flow.bgd.mapper" targetProject="FlowBgd/src/main/resources"/>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.flow.bgd.mapper"
-                             targetProject="FlowBgd\src\main\java"/>
+                             targetProject="FlowBgd/src/main/java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="%">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>

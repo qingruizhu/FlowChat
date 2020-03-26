@@ -2,10 +2,10 @@ package com.flow.client.controller;
 
 import com.flow.client.picture.ChatPic;
 import com.flow.client.picture.PicsJWindow;
-import com.flow.client.util.ManagerChat;
 import com.flow.client.util.ManagerClientThread;
 import com.flow.common.Message;
 import com.flow.common.MessageType;
+import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -85,12 +85,13 @@ public class Chat extends JFrame implements ActionListener, MouseListener, Mouse
         getContentPane().add(panel_1);
         panel_1.setLayout(null);
         //头像
-        JLabel lb_touxiang = new JLabel(new ImageIcon("image/dialogimage/huisetouxiang.png"));
+//        JLabel lb_touxiang = new JLabel(new ImageIcon("image/dialogimage/huisetouxiang.png"));
+        JLabel lb_touxiang = new JLabel(new ImageIcon("image/Q.png"));
         lb_touxiang.setBounds(10, 10, 42, 42);
         panel_1.add(lb_touxiang);
         //姓名
         JLabel friendname = new JLabel(this.friendName);
-        friendname.setBounds(62, 10, 105, 20);
+        friendname.setBounds(62, 13, 105, 20);
         panel_1.add(friendname);
         //右上角边框->关闭
         exit_button = new JButton(new ImageIcon("image/dialogimage/dexit.jpg"));
@@ -195,8 +196,9 @@ public class Chat extends JFrame implements ActionListener, MouseListener, Mouse
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == exit_button) {
-            ManagerChat.remove(this.selfId + " " + this.friendId);
-            this.dispose();
+//            ManagerChat.remove(this.selfId + " " + this.friendId);
+//            this.dispose();
+            this.setVisible(false);
         }else
         if (event.getSource() == send_button) {
             /** 1.发送信息 */
@@ -257,6 +259,9 @@ public class Chat extends JFrame implements ActionListener, MouseListener, Mouse
      * 显示接收到的消息
      */
     public void showMessage(Message message) {
+        if (StringUtils.isEmpty(message.getCon())) {
+            return;
+        }
         String info = friendName + " " + message.getSendTime() + " :\n";
         SimpleAttributeSet attrset = new SimpleAttributeSet();
         StyleConstants.setFontSize(attrset, 14);
@@ -271,7 +276,11 @@ public class Chat extends JFrame implements ActionListener, MouseListener, Mouse
         info = message.getCon();
         int index = info.lastIndexOf("*");
 //        StyleConstants.setFontSize(attrset, message.getSize());
-        StyleConstants.setForeground(attrset, recolor(message.getCol()));
+        String text_color = message.getCol();
+        if (null == text_color) {
+            text_color = Color.BLACK.toString();
+        }
+        StyleConstants.setForeground(attrset, recolor(text_color.toString()));
 //        StyleConstants.setFontFamily(attrset, message.getFont());
         docs = display_textPane.getDocument();
         pos1 = docs.getLength();
@@ -299,6 +308,9 @@ public class Chat extends JFrame implements ActionListener, MouseListener, Mouse
      * 显示发送的消息
      */
     public void showOwnMessage(Message m) {
+        if (StringUtils.isEmpty(m.getCon())) {
+            return;
+        }
         String info = "我 " + " " + m.getSendTime() + " :\r\n";
         SimpleAttributeSet attrset = new SimpleAttributeSet();
         StyleConstants.setFontSize(attrset, 14);
@@ -312,7 +324,11 @@ public class Chat extends JFrame implements ActionListener, MouseListener, Mouse
         }
         info = m.getCon() + "\r\n";
 //        StyleConstants.setFontSize(attrset, m.getSize());
-        StyleConstants.setForeground(attrset, recolor(m.getCol()));
+        String text_color = m.getCol();
+        if (null == text_color) {
+            text_color = Color.BLACK.toString();
+        }
+        StyleConstants.setForeground(attrset, recolor(text_color.toString()));
 //        StyleConstants.setFontFamily(attrset, m.getFont());
         docs = display_textPane.getDocument();
         pos2 = docs.getLength();

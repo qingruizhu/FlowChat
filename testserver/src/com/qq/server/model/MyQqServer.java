@@ -3,21 +3,18 @@
  */
 package com.qq.server.model;
 
-import com.qq.common.*;
+import com.qq.common.Message;
+import com.qq.common.User;
 import com.qq.server.view.MyServerFrame;
 
-import java.net.*;
-import java.awt.Color;
-import java.io.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.ResultSet;
 import java.text.DateFormat;
-import java.util.*;
-
-import javax.swing.JOptionPane;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
+import java.util.Date;
 
 public class MyQqServer implements Runnable {
 

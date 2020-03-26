@@ -1,21 +1,24 @@
 package com.flow.server.controller;
 
 
+import com.flow.bgd.model.OnLine;
 import com.flow.bgd.model.User;
-import com.flow.bgd.service.UserService;
+import com.flow.bgd.service.IOnlineService;
+import com.flow.common.DateformateUtil;
 import com.flow.common.Message;
 import com.flow.common.MessageType;
-import com.flow.server.dao.ServerUserMapper;
 import com.flow.server.model.ManagerClientThread;
 import com.flow.server.model.ServerConClientThread;
+import com.flow.server.service.ServerChatContentService;
+import com.flow.server.service.ServerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,9 +28,11 @@ import java.util.List;
 public class Server {
 
     @Autowired
-    private UserService userService;
-    @Resource
-    ServerUserMapper serverUserMapper;
+    private ServerUserService userService;
+    @Autowired
+    private ServerChatContentService chatContentService;
+    @Autowired
+    private IOnlineService onlineService;
 
     public void listening() {
         try {
@@ -49,17 +54,25 @@ public class Server {
                     message.setMesType(MessageType.message_succeed);
                     oos.writeObject(message);
                     /** 2.修改登录状态*/
-                    User update = new User();
-                    update.setId(select.getId());
-                    update.setOnline(1);
-                    userService.update(update);
+//                    User update = new User();
+//                    update.setId(select.getId());
+//                    update.setOnline(1);
+//                    userService.update(update);
+                    OnLine onLine = new OnLine();
+                    onLine.setUserId(select.getUserId());
+                    onLine.setOnline(true);
+                    onLine.setLoginTime(DateformateUtil.yMd(new Date()));
+                    if (onlineService.update(onLine) <= 0) {
+                        onlineService.insert(onLine);
+                    }
                     /** 3.开启一个线程与客户端保持通讯 */
                     ServerConClientThread thread = new ServerConClientThread(accept);
-                    thread.setUserService(userService);
+                    thread.setOnlineService(onlineService);
+                    thread.setChatContentService(chatContentService);
                     ManagerClientThread.set(user.getUserId(), thread);
                     thread.start();//启动与该客户端通讯的线程
                     /** 4.通知其好友自己已上线 */
-                    List<User> users = serverUserMapper.selectOnlineFriendsByUserId(user.getUserId());
+                    List<User> users = userService.selectOnlineFriendsByUserId(user.getUserId());
                     if (null != users && users.size() > 0) {
                         Message ms = new Message();
                         ms.setCon(user.getUserId());
@@ -84,7 +97,5 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 }

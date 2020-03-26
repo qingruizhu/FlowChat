@@ -2,6 +2,7 @@ package com.flow.client.controller;
 
 import com.flow.bgd.model.User;
 import com.flow.client.plugin.FriendJlabel;
+import com.flow.client.thread.ClientThread;
 import com.flow.client.util.ManagerChat;
 import com.flow.client.util.ManagerClientThread;
 import com.flow.common.Message;
@@ -41,9 +42,11 @@ public class FriendList extends JFrame implements ActionListener, MouseListener,
 
     //自己的账号
     private String selfId;
+    private String selfName;
 
-    public FriendList(String selfId, List<User> friends) {
-        this.selfId = selfId;
+    public FriendList(User me, List<User> friends) {
+        this.selfId = me.getUserId();
+        this.selfName = me.getName();
         //第一张卡片
         /**点开后显示好友列表*/
         /** 添加按钮 */
@@ -60,8 +63,12 @@ public class FriendList extends JFrame implements ActionListener, MouseListener,
         friendLbs = new FriendJlabel[friends.size()];
         for (int i = 0; i < friends.size(); i++) {
             User friend = friends.get(i);
-            FriendJlabel friendJlabel = new FriendJlabel(friend, new ImageIcon("image/mm.jpg"), JLabel.LEFT);
-            friendJlabel.setEnabled(friend.getOnline() == 0 ? false : true);
+            String touxiang = "image/hh.jpg";
+            if (null != friend.getSex() && 0 == friend.getSex()) {
+                touxiang = "image/mm.jpg";
+            }
+            FriendJlabel friendJlabel = new FriendJlabel(friend, new ImageIcon(touxiang), JLabel.LEFT);
+            friendJlabel.setEnabled(friend.isOnline());
             friendJlabel.addMouseListener(this);//添加鼠标事件
             friend_jp2.add(friendJlabel);
             friendLbs[i] = friendJlabel;
@@ -111,7 +118,7 @@ public class FriendList extends JFrame implements ActionListener, MouseListener,
 
         /** 把整个JFrame设置成CardLayout */
         cardLayout = new CardLayout();
-        this.setTitle(selfId);//title 显示自己的编号
+        this.setTitle(selfName);//title 显示自己的编号
         this.setLayout(cardLayout);
         this.add(friend_jp1, "1");
         this.add(stranger_jp1, "2");
@@ -143,8 +150,26 @@ public class FriendList extends JFrame implements ActionListener, MouseListener,
                 //得到好友编号
                 String friendId = jLabel.getId();
                 System.out.println("你[" + selfId + "]准备和【" + friendId + "】聊天...");
-                Chat chat = new Chat(selfId, friendId, jLabel.getUser().getName());
-                ManagerChat.set(selfId + " " + friendId, chat);
+                Chat chat = ManagerChat.get(selfId + " " + friendId);
+                if (null != chat) {
+                    chat.setVisible(true);
+                } else {
+                    chat = new Chat(selfId, friendId, jLabel.getUser().getName());
+                    ManagerChat.set(selfId + " " + friendId, chat);
+                    //要求返回离线信息
+                    ClientThread clientThread = ManagerClientThread.get(selfId);
+                    try {
+                        ObjectOutputStream oos = new ObjectOutputStream(
+                                clientThread.getSocket().getOutputStream());
+                        Message message = new Message();
+                        message.setSender(friendId);
+                        message.setGetter(selfId);
+                        message.setMesType(MessageType.message_ret_outlineMessage);
+                        oos.writeObject(message);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }

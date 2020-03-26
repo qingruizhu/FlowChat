@@ -3,18 +3,24 @@
 <mapper namespace="com.flow.server.dao.ServerUserMapper">
 
 
-    <resultMap id="BaseResultMap" type="com.flow.bgd.model.User">
+    <resultMap id="UserResultMap" type="com.flow.bgd.model.User">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
     </resultMap>
 
 
-    <select id="selectOnlineFriendsByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select * from user
+    <select id="selectOnlineFriendsByUserId" parameterType="java.lang.String" resultMap="UserResultMap">
+        <!-- select * from user
         where
         user_id in (select friend_id from user_friend where user_id =#{userId,jdbcType=VARCHAR})
-        and online=1
+        and online=1 -->
+        select * from user
+                where
+                user_id in (
+                        select friend_id from user_friend f RIGHT JOIN on_line o ON f.friend_id=o.user_id
+                        where f.user_id =#{userId,jdbcType=VARCHAR} and o.online=true
+                        )
     </select>
 
 </mapper>

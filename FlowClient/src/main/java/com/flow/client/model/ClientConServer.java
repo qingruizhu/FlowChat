@@ -1,6 +1,7 @@
 package com.flow.client.model;
 
 import com.flow.bgd.model.User;
+import com.flow.bgd.service.UserService;
 import com.flow.client.controller.FriendList;
 import com.flow.client.dao.ClientUserMapper;
 import com.flow.client.thread.ClientThread;
@@ -20,6 +21,8 @@ public class ClientConServer {
 
     @Resource
     private ClientUserMapper clientUserMapper;
+    @Resource
+    private UserService userService;
 
     public  boolean sendLoginInfoToServer(User user){
 //        List<User> aa = clientUserMapper.selectFriendsByUserId(user.getUserId());
@@ -35,9 +38,10 @@ public class ClientConServer {
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             Message message = (Message)ois.readObject();
             if (message.getMesType().equals("1")) {//登录成功
+                User me = userService.select(user);
                 //创建好友列表
                 List<User> friends = clientUserMapper.selectFriendsByUserId(user.getUserId());
-                FriendList friendList = new FriendList(user.getUserId(),friends);
+                FriendList friendList = new FriendList(me,friends);
                 ManagerFriendList.set(user.getUserId(),friendList);
                 //创建一个该qq号和服务器端保持通讯连接得线程
                 ClientThread clientThread = new ClientThread(socket);

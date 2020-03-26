@@ -32,7 +32,11 @@ public class ClientThread extends Thread {
                     //显示在聊天框中
                     Chat chat = ManagerChat.get(message.getGetter() + " " + message.getSender());
                     chat.showMessage(message);
-                } else if (message.getMesType().equals(MessageType.message_ret_onLineFriend)) {
+                } else if (message.getMesType().equals(MessageType.message_ret_outlineMessage)) {
+                    /** 离线信息 */
+                    Chat chat = ManagerChat.get(message.getGetter() + " " + message.getSender());
+                    chat.showMessage(message);
+                }else if (message.getMesType().equals(MessageType.message_ret_onLineFriend)) {
                     /** 好友列表 */
                     String content = message.getCon();
                     System.out.println("好友上线通知：" + content);

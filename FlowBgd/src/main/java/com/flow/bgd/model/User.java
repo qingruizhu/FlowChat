@@ -10,9 +10,9 @@ public class User implements Serializable {
     private String name;
 
     private String password;
-
-    /** 是否在线：0-不在线；1-在线 */
-    private Integer online;
+    /** 性别 */
+    private Integer sex;
+    private boolean online;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,11 +48,19 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Integer getOnline() {
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public boolean isOnline() {
         return online;
     }
 
-    public void setOnline(Integer online) {
+    public void setOnline(boolean online) {
         this.online = online;
     }
 
@@ -66,6 +74,7 @@ public class User implements Serializable {
         sb.append(", userId=").append(userId);
         sb.append(", name=").append(name);
         sb.append(", password=").append(password);
+        sb.append(", sex=").append(sex);
         sb.append(", online=").append(online);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

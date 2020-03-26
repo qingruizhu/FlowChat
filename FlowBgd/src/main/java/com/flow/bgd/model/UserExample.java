@@ -374,63 +374,63 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andOnlineIsNull() {
-            addCriterion("online is null");
+        public Criteria andSexIsNull() {
+            addCriterion("sex is null");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineIsNotNull() {
-            addCriterion("online is not null");
+        public Criteria andSexIsNotNull() {
+            addCriterion("sex is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineEqualTo(Integer value) {
-            addCriterion("online =", value, "online");
+        public Criteria andSexEqualTo(Integer value) {
+            addCriterion("sex =", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineNotEqualTo(Integer value) {
-            addCriterion("online <>", value, "online");
+        public Criteria andSexNotEqualTo(Integer value) {
+            addCriterion("sex <>", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineGreaterThan(Integer value) {
-            addCriterion("online >", value, "online");
+        public Criteria andSexGreaterThan(Integer value) {
+            addCriterion("sex >", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineGreaterThanOrEqualTo(Integer value) {
-            addCriterion("online >=", value, "online");
+        public Criteria andSexGreaterThanOrEqualTo(Integer value) {
+            addCriterion("sex >=", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineLessThan(Integer value) {
-            addCriterion("online <", value, "online");
+        public Criteria andSexLessThan(Integer value) {
+            addCriterion("sex <", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineLessThanOrEqualTo(Integer value) {
-            addCriterion("online <=", value, "online");
+        public Criteria andSexLessThanOrEqualTo(Integer value) {
+            addCriterion("sex <=", value, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineIn(List<Integer> values) {
-            addCriterion("online in", values, "online");
+        public Criteria andSexIn(List<Integer> values) {
+            addCriterion("sex in", values, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineNotIn(List<Integer> values) {
-            addCriterion("online not in", values, "online");
+        public Criteria andSexNotIn(List<Integer> values) {
+            addCriterion("sex not in", values, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineBetween(Integer value1, Integer value2) {
-            addCriterion("online between", value1, value2, "online");
+        public Criteria andSexBetween(Integer value1, Integer value2) {
+            addCriterion("sex between", value1, value2, "sex");
             return (Criteria) this;
         }
 
-        public Criteria andOnlineNotBetween(Integer value1, Integer value2) {
-            addCriterion("online not between", value1, value2, "online");
+        public Criteria andSexNotBetween(Integer value1, Integer value2) {
+            addCriterion("sex not between", value1, value2, "sex");
             return (Criteria) this;
         }
     }
